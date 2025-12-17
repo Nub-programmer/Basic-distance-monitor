@@ -1,2 +1,20 @@
-.
+LCD (16x2) CONNECTIONS (WITHOUT POT)
+LCD Pin 1 (VSS) -> Arduino GND
+LCD Pin 2 (VDD) -> Arduino 5V
+LCD Pin 3 (V0) -> Arduino GND
+LCD Pin 4 (RS) -> Arduino D12
+LCD Pin 5 (RW) -> Arduino GND
+LCD Pin 6 (EN) -> Arduino D11
+LCD Pin 11 (D4) -> Arduino D5
+LCD Pin 12 (D5) -> Arduino D4
+LCD Pin 13 (D6) -> Arduino D3
+LCD Pin 14 (D7) -> Arduino D2
+LCD Pin 15 (LED+) -> Arduino 5V through 220 ohm resistor
+LCD Pin 16 (LED-) -> Arduino GND
 
+ULTRASONIC SENSOR (HC-SR04) CONNECTIONS
+
+HC-SR04 VCC -> Arduino 5V
+HC-SR04 TRIG -> Arduino D9
+HC-SR04 ECHO -> Arduino D10
+HC-SR04 GND -> Arduino GND
