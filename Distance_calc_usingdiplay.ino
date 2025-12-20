@@ -1,52 +1,65 @@
 #include <LiquidCrystal.h>
 
-// Define the pins for the LCD
-const int rs = 12;  // Register Select
-const int en = 11;  // Enable
+// LCD pins (basic 16x2 LCD, no I2C stuff)
+const int rs = 12;   // tells LCD "hey this is a command / data"
+const int en = 11;   // enables the LCD to read data
 const int d4 = 5;
 const int d5 = 4;
 const int d6 = 3;
 const int d7 = 2;
 
-// Define the pins for the ultrasonic sensor
-const int trigPin = 9;
-const int echoPin = 10;
+// ultrasonic sensor pins
+const int trigPin = 9;   // sends the sound wave
+const int echoPin = 10;  // listens for the sound coming back
 
+// creating the LCD object with the pins above
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
-long duration;
-int distance;
+long duration;   // time taken for echo
+int distance;    // final distance in cm
 
 void setup() {
+  // start the LCD (16 columns, 2 rows)
   lcd.begin(16, 2);
+
+  // first line text
   lcd.print("Distance:");
 
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
-  
+  // ultrasonic pin modes
+  pinMode(trigPin, OUTPUT);  // trigger sends signal
+  pinMode(echoPin, INPUT);   // echo receives signal
+
+  // serial just for debugging if needed
   Serial.begin(9600);
 }
 
 void loop() {
-  // Generate a 10us pulse to trigger the ultrasonic sensor
+  // make sure trigger is LOW first
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
+
+  // send a short pulse to ultrasonic sensor
   digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
-  
-  // Measure the duration of the pulse on the echoPin
+
+  // get how long the echo stayed HIGH
   duration = pulseIn(echoPin, HIGH);
-  
-  // Calculate the distance in centimeters using the speed of sound
+
+  // convert time into distance (cm)
   distance = duration * 0.034 / 2;
 
-  // Display the distance on the LCD
+  // go to second line of LCD
   lcd.setCursor(0, 1);
-  lcd.print("                "); // Clear the previous distance
+
+  // clear old values so screen doesn’t glitch
+  lcd.print("                ");
+
+  // print distance
   lcd.setCursor(0, 1);
   lcd.print(distance);
   lcd.print(" cm");
 
-  delay(1000); // Wait for 1 second before the next measurement
+  // wait a bit before next reading
+  delay(1000);
 }
